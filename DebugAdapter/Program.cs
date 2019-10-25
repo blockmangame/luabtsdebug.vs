@@ -79,6 +79,7 @@ namespace DebugAdapter
                 res["seq"] = 1;
                 body["supportsConfigurationDoneRequest"] = true;
                 body["supportsEvaluateForHovers"] = true;
+                body["supportsSetVariable"] = true;
                 buf = Encoding.UTF8.GetBytes(Msg2Txt(res));
                 stdout.Write(buf, 0, buf.Length);
                 stdout.Flush();
