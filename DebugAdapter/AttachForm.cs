@@ -78,6 +78,7 @@ namespace DebugAdapter
         private void timerRefresh_Tick(object sender, EventArgs e)
         {
             timerRefresh.Stop();
+            listBoxAddr.Items.Clear();
             while (udp.Available > 0)
             {
                 IPEndPoint addr = new IPEndPoint(0, 0);

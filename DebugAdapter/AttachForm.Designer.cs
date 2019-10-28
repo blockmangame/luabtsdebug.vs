@@ -78,7 +78,6 @@
             // 
             // buttonCancel
             // 
-            this.buttonCancel.Anchor = System.Windows.Forms.AnchorStyles.Bottom;
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
             this.buttonCancel.Location = new System.Drawing.Point(12, -30);
             this.buttonCancel.Name = "buttonCancel";
@@ -129,7 +128,7 @@
             this.Controls.Add(this.checkBoxLocalSource);
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "AttachForm";
-            this.Text = "AttachForm";
+            this.Text = "Attach Game Client/Server";
             this.Load += new System.EventHandler(this.AttachForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
