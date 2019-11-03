@@ -80,6 +80,17 @@ namespace DebugAdapter
                 body["supportsConfigurationDoneRequest"] = true;
                 body["supportsEvaluateForHovers"] = true;
                 body["supportsSetVariable"] = true;
+                body["supportsExceptionInfoRequest"] = true;
+                var excs = new Dictionary<string, object>[2];
+                body["exceptionBreakpointFilters"] = excs;
+                excs[0] = new Dictionary<string, object>();
+                excs[0]["filter"] = "perror";
+                excs[0]["label"] = "SCRIPT_EXCEPTION output";
+                excs[0]["default"] = false;
+                excs[1] = new Dictionary<string, object>();
+                excs[1]["filter"] = "xpcall";
+                excs[1]["label"] = "Exception in xpcall";
+                excs[1]["default"] = true;
                 buf = Encoding.UTF8.GetBytes(Msg2Txt(res));
                 stdout.Write(buf, 0, buf.Length);
                 stdout.Flush();
