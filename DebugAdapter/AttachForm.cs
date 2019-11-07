@@ -25,8 +25,11 @@ namespace DebugAdapter
                 object c;
                 if (data.TryGetValue("client", out c) && (bool)c)
                     typ = "client";
-                return string.Format("{0} - {1}<{2}.{3}> {4} -{5}", addr,
-                    data["name"], data["game"], data["engineVersion"], typ, data["sys"]);
+                object sys;
+                if (!data.TryGetValue("device", out sys))
+                    sys = data["sys"];
+                return string.Format("{0} - {1}<{2}.{3}> {4} - {5}", addr,
+                    data["name"], data["game"], data["engineVersion"], typ, sys);
             }
 
             public string Info

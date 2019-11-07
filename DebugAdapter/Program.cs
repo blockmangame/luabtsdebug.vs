@@ -81,7 +81,7 @@ namespace DebugAdapter
                 body["supportsEvaluateForHovers"] = true;
                 body["supportsSetVariable"] = true;
                 body["supportsExceptionInfoRequest"] = true;
-                var excs = new Dictionary<string, object>[2];
+                var excs = new Dictionary<string, object>[3];
                 body["exceptionBreakpointFilters"] = excs;
                 excs[0] = new Dictionary<string, object>();
                 excs[0]["filter"] = "perror";
@@ -89,8 +89,12 @@ namespace DebugAdapter
                 excs[0]["default"] = false;
                 excs[1] = new Dictionary<string, object>();
                 excs[1]["filter"] = "xpcall";
-                excs[1]["label"] = "Exception in xpcall";
+                excs[1]["label"] = "exception in xpcall";
                 excs[1]["default"] = true;
+                excs[2] = new Dictionary<string, object>();
+                excs[2]["filter"] = "endless";
+                excs[2]["label"] = "break when endless";
+                excs[2]["default"] = false;
                 buf = Encoding.UTF8.GetBytes(Msg2Txt(res));
                 stdout.Write(buf, 0, buf.Length);
                 stdout.Flush();
