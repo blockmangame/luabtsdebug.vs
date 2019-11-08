@@ -81,6 +81,8 @@ namespace DebugAdapter
                 body["supportsEvaluateForHovers"] = true;
                 body["supportsSetVariable"] = true;
                 body["supportsExceptionInfoRequest"] = true;
+                body["supportsExceptionOptions"] = true;
+                body["supportsExceptionDetailsRequest"] = true;
                 var excs = new Dictionary<string, object>[3];
                 body["exceptionBreakpointFilters"] = excs;
                 excs[0] = new Dictionary<string, object>();

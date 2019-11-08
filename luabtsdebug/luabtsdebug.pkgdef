@@ -12,7 +12,8 @@
 
 ; Capabilities
 "Attach"=dword:00000000
-"Exceptions"=dword:00000000
+"Exceptions"=dword:00000001
+"ExceptionBreakpointCategory"="{C7C064D3-C012-44D2-AC1E-28A9B29469A9}"
 "ExceptionConditions"=dword:00000000
 
 ; Language Info 
@@ -37,3 +38,22 @@
 [$RootKey$\Menus]
 "{f27e4f35-9578-41ff-adbf-f603f7c8b8a9}"=", Menus.ctmenu, 1"
 
+
+[$RootKey$\AD7Metrics\Engine\{94EB6CD0-3439-4AF2-971C-0327A9DAEA68}\ExceptionBreakpointMappings]
+"SCRIPT_EXCEPTION output"="perror"
+"exception in xpcall"="xpcall"
+"break when endless"="endless"
+
+[$RootKey$\AD7Metrics\Exception\{C7C064D3-C012-44D2-AC1E-28A9B29469A9}]
+
+[$RootKey$\AD7Metrics\Exception\{C7C064D3-C012-44D2-AC1E-28A9B29469A9}\Lua/BTS Debuger]
+"State"=dword:0x14022
+
+[$RootKey$\AD7Metrics\Exception\{C7C064D3-C012-44D2-AC1E-28A9B29469A9}\Lua/BTS Debuger\SCRIPT_EXCEPTION output]
+"State"=dword:0x4020
+
+[$RootKey$\AD7Metrics\Exception\{C7C064D3-C012-44D2-AC1E-28A9B29469A9}\Lua/BTS Debuger\exception in xpcall]
+"State"=dword:0x4001
+
+[$RootKey$\AD7Metrics\Exception\{C7C064D3-C012-44D2-AC1E-28A9B29469A9}\Lua/BTS Debuger\break when endless]
+"State"=dword:0x4020
