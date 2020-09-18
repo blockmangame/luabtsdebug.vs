@@ -72,7 +72,7 @@
             this.buttonOk.Name = "buttonOk";
             this.buttonOk.Size = new System.Drawing.Size(75, 23);
             this.buttonOk.TabIndex = 2;
-            this.buttonOk.Text = "Attach";
+            this.buttonOk.Text = "附加";
             this.buttonOk.UseVisualStyleBackColor = true;
             this.buttonOk.Click += new System.EventHandler(this.buttonOk_Click);
             // 
@@ -83,6 +83,7 @@
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 2;
+            this.buttonCancel.TabStop = false;
             this.buttonCancel.Text = "Cancel";
             this.buttonCancel.UseVisualStyleBackColor = true;
             // 
@@ -98,7 +99,7 @@
             this.buttonRefresh.Name = "buttonRefresh";
             this.buttonRefresh.Size = new System.Drawing.Size(75, 23);
             this.buttonRefresh.TabIndex = 3;
-            this.buttonRefresh.Text = "Refresh";
+            this.buttonRefresh.Text = "刷新";
             this.buttonRefresh.UseVisualStyleBackColor = true;
             this.buttonRefresh.Click += new System.EventHandler(this.buttonRefresh_Click);
             // 
@@ -108,9 +109,9 @@
             this.checkBoxLocalSource.AutoSize = true;
             this.checkBoxLocalSource.Location = new System.Drawing.Point(12, 419);
             this.checkBoxLocalSource.Name = "checkBoxLocalSource";
-            this.checkBoxLocalSource.Size = new System.Drawing.Size(96, 16);
+            this.checkBoxLocalSource.Size = new System.Drawing.Size(120, 16);
             this.checkBoxLocalSource.TabIndex = 4;
-            this.checkBoxLocalSource.Text = "Local Source";
+            this.checkBoxLocalSource.Text = "使用本地代码文件";
             this.checkBoxLocalSource.UseVisualStyleBackColor = true;
             // 
             // AttachForm
@@ -128,7 +129,7 @@
             this.Controls.Add(this.checkBoxLocalSource);
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "AttachForm";
-            this.Text = "Attach Game Client/Server";
+            this.Text = "附加到游戏程序（客户端/服务器）";
             this.Load += new System.EventHandler(this.AttachForm_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

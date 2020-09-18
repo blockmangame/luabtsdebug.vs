@@ -52,11 +52,18 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidDebugCommandPackageCmdSet" id="DebugCommandId" priority="0x0100" type="Button">
+      <Button guid="guidDebugCommandPackageCmdSet" id="AttachCommandId" priority="0x0100" type="Button">
         <Parent guid="guidDebugCommandPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPicSearch" />
         <Strings>
-          <ButtonText>Lua/BTS Debug</ButtonText>
+          <ButtonText>Lua/BTS Attach</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidDebugCommandPackageCmdSet" id="LaunchCommandId" priority="0x0100" type="Button">
+        <Parent guid="guidDebugCommandPackageCmdSet" id="MyMenuGroup" />
+        <Icon guid="guidImages" id="bmpPicSearch" />
+        <Strings>
+          <ButtonText>Lua/BTS Launch</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -79,7 +86,8 @@
     <!-- This is the guid used to group the menu commands together -->
     <GuidSymbol name="guidDebugCommandPackageCmdSet" value="{c3667d62-5a02-4ab0-a82d-31b4702e50a0}">
       <IDSymbol name="MyMenuGroup" value="0x1020" />
-      <IDSymbol name="DebugCommandId" value="0x0100" />
+      <IDSymbol name="AttachCommandId" value="0x0100" />
+      <IDSymbol name="LaunchCommandId" value="0x0101" />
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{a13e9ddc-8f6b-4fc2-8014-dff6fb023e64}" >

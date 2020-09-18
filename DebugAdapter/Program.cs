@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading;
@@ -10,6 +11,17 @@ using System.Threading.Tasks;
 
 namespace DebugAdapter
 {
+    static class _Helper
+    {
+        public static string GetStr(this Dictionary<string, object> dict, string key, string def = null)
+        {
+            object obj;
+            if (dict.TryGetValue(key, out obj))
+                return obj as string;
+            return def;
+        }
+    }
+
     class Program
     {
         static TcpClient tcp = new TcpClient();
@@ -17,6 +29,7 @@ namespace DebugAdapter
         static Stream stdout = Console.OpenStandardOutput();
         static MemoryStream recvBuf = new MemoryStream(0x1000);
 
+        [STAThreadAttribute]
         static void Main(string[] args)
         {
             recvBuf.SetLength(recvBuf.Capacity);
@@ -102,9 +115,14 @@ namespace DebugAdapter
                 stdout.Flush();
                 return true;
             }
-            else if (cmd == "attach" || cmd == "launch")
+            else if (cmd == "attach")
             {
                 DoAttach(data);
+                return false;
+            }
+            else if (cmd == "launch")
+            {
+                DoLaunch(data);
                 return false;
             }
             return true;
@@ -127,10 +145,7 @@ namespace DebugAdapter
                     return;
                 addr = frm.attachAddr;
                 if (!frm.LocalSource)
-                {
                     args.Remove("resDir");
-                    args.Remove("gameDir");
-                }
             }
             try
             {
@@ -141,8 +156,73 @@ namespace DebugAdapter
                 System.Windows.Forms.MessageBox.Show("connect failed 3.");
                 return;
             }
+            SendDebug(req);
+        }
+        static void DoLaunch(Dictionary<string, object> req)
+        {
+            var args = req["arguments"] as Dictionary<string, object>;
+            using (LaunchForm frm = new LaunchForm())
+            {
+                string dir = args.GetStr("resDir");
+                string path;
+                if (!frm.ShowLaunch(out path, ref dir))
+                    return;
+                args["resDir"] = dir;
+                args["gameExe"] = path;
+            }
+            TcpListener listen = new TcpListener(new IPEndPoint(IPAddress.Loopback, 0));
+            listen.Start();
+            Environment.SetEnvironmentVariable("DebugConnect", (listen.LocalEndpoint as IPEndPoint).Port.ToString());
+            ProcessStartInfo ps = new ProcessStartInfo();
+            ps.FileName = args["gameExe"] as string;
+            ps.WorkingDirectory = args["resDir"] as string;
+            Process.Start(ps);
+            try
+            {
+                tcp = listen.AcceptTcpClient();
+            }
+            catch
+            {
+                System.Windows.Forms.MessageBox.Show("listen failed.");
+                return;
+            }
+            finally
+            {
+                listen.Stop();
+            }
+            SendDebug(req);
+        }
+
+        static void SendDebug(Dictionary<string, object> req)
+        {
+            FillGameDir(req["arguments"] as Dictionary<string, object>);
             byte[] buf = Encoding.UTF8.GetBytes(Msg2Txt(req));
             tcp.GetStream().Write(buf, 0, buf.Length);
+        }
+
+
+        static void FillGameDir(Dictionary<string, object> args)
+        {
+            string resDir = args.GetStr("resDir");
+            if (resDir == null)
+                return;
+
+            string path = resDir + "/gameconfig.json";
+            if (!File.Exists(path))
+                return;
+
+            var cfg = CJsonHelper.Load(File.ReadAllText(path)) as Dictionary<string, object>;
+
+            string gameDir = cfg.GetStr("dataDir", "game").Replace("/", @"\");
+            string gameType = cfg.GetStr("gtype", "sample");
+            if (gameDir.StartsWith(@".\"))
+                gameDir = gameDir.Substring(2);
+            if (gameDir == "game" && !Directory.Exists(resDir + @"\game\" + gameType))
+                gameDir = "game_res";
+            if (gameDir.Length < 2 || (gameDir[1] != ':' && gameDir[0] != '\\'))
+                gameDir = Path.Combine(resDir, gameDir);
+            if (Directory.Exists(Path.Combine(gameDir, gameType)))
+                args["gameDir"] = gameDir + @"\{gameName}";
         }
     }
 }

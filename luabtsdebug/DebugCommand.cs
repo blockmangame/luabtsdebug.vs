@@ -20,7 +20,8 @@ namespace luabtsdebug
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 0x0100;
+        public const int AttachCommandId = 0x0100;
+        public const int LaunchCommandId = 0x0101;
 
         /// <summary>
         /// Command menu group (command set GUID).
@@ -46,8 +47,9 @@ namespace luabtsdebug
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
             dte = _dte;
 
-            var menuCommandID = new CommandID(CommandSet, CommandId);
-            var menuItem = new MenuCommand(this.Execute, menuCommandID);
+            var menuItem = new MenuCommand(this.ExecuteAttach, new CommandID(CommandSet, AttachCommandId));
+            commandService.AddCommand(menuItem);
+            menuItem = new MenuCommand(this.ExecuteLaunch, new CommandID(CommandSet, LaunchCommandId));
             commandService.AddCommand(menuItem);
         }
 
@@ -93,11 +95,29 @@ namespace luabtsdebug
         /// </summary>
         /// <param name="sender">Event sender.</param>
         /// <param name="e">Event args.</param>
-        private void Execute(object sender, EventArgs e)
+        private void ExecuteAttach(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
 
-            string resDir = null;
+            CallDebuger("attach");
+        }
+
+        private void ExecuteLaunch(object sender, EventArgs e)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            CallDebuger("launch");
+        }
+
+        private void CallDebuger(string request)
+        {
+            ThreadHelper.ThrowIfNotOnUIThread();
+
+            var data = new Dictionary<string, object>();
+            data["request"] = request;
+            data["stopOnEntry"] = false;
+            data["program"] = "remote debug";
+
             string path = dte.Solution.FileName;
             while (true)
             {
@@ -107,19 +127,9 @@ namespace luabtsdebug
                 path = path.Substring(0, index);
                 if (Directory.Exists(path + @"\res\lua"))
                 {
-                    resDir = path + @"\res";
+                    data["resDir"] = path + @"\res";
                     break;
                 }
-            }
-
-            var data = new Dictionary<string, object>();
-            data["request"] = "attach";
-            data["stopOnEntry"] = false;
-            data["program"] = "remote debug";
-            if (resDir != null)
-            {
-                data["resDir"] = resDir;
-                data["gameDir"] = string.Format(@"{0}\game\{{gameName}};{0}\game_res\{{gameName}}", resDir);
             }
 
             string tempFile = Path.GetTempFileName();

@@ -53,6 +53,12 @@
       <DependentUpon>AttachForm.cs</DependentUpon>
     </Compile>
     <Compile Include="CJsonHelper.cs" />
+    <Compile Include="LaunchForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="LaunchForm.Designer.cs">
+      <DependentUpon>LaunchForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -62,6 +68,9 @@
   <ItemGroup>
     <EmbeddedResource Include="AttachForm.resx">
       <DependentUpon>AttachForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="LaunchForm.resx">
+      <DependentUpon>LaunchForm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
