@@ -18,22 +18,47 @@ namespace DebugAdapter
             InitializeComponent();
         }
 
+        static string[] ReadStrAry(string str)
+        {
+            if (string.IsNullOrEmpty(str))
+                return new string[0];
+            return str.Split(';');
+        }
+
+        static string SaveStrAry(string str, string add)
+        {
+            var list = ReadStrAry(str).ToList();
+            list.Remove(add);
+            list.Insert(0, add);
+            if (list.Count > 20)
+                list.RemoveAt(20);
+            return string.Join(";", list);
+        }
+
         public bool ShowLaunch(out string path, ref string dir)
         {
+            var setting = Properties.Settings.Default;
+
+            comboBoxFile.Items.AddRange(ReadStrAry(setting.gameExe));
+            comboBoxDir.Items.AddRange(ReadStrAry(setting.gameDir));
+
             if (dir != null)
             {
-                comboBoxDir.Items.Add(dir);
                 foreach (string p in Directory.GetFiles(dir, "*.exe"))
                 {
                     if ((new FileInfo(p)).Length > 1024 * 1024)
-                        comboBoxFile.Items.Add(p);
+                    {
+                        if (!comboBoxFile.Items.Contains(p))
+                            comboBoxFile.Items.Add(p);
+                    }
                 }
+                if (!comboBoxDir.Items.Contains(dir))
+                    comboBoxDir.Items.Add(dir);
             }
 
-            if (comboBoxFile.SelectedIndex < 0 && comboBoxFile.Items.Count > 0)
+            if (comboBoxFile.Items.Count > 0)
                 comboBoxFile.SelectedIndex = 0;
-
-            if (comboBoxDir.SelectedIndex < 0 && comboBoxDir.Items.Count > 0)
+            if (comboBoxDir.Items.Count > 0)
                 comboBoxDir.SelectedIndex = 0;
 
             if (ShowDialog() != DialogResult.OK)
@@ -42,8 +67,12 @@ namespace DebugAdapter
                 return false;
             }
 
-            dir = comboBoxDir.Text;
             path = comboBoxFile.Text;
+            dir = comboBoxDir.Text;
+
+            setting.gameExe = SaveStrAry(setting.gameExe, path);
+            setting.gameDir = SaveStrAry(setting.gameDir, dir);
+            setting.Save();
 
             return true;
         }
