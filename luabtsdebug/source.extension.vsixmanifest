@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="luabtsdebug.3247e9f6-2189-4aa6-ad8c-2c055532dca5" Version="0.2.3" Language="en-US" Publisher="SandBoxOL" />
+        <Identity Id="luabtsdebug.3247e9f6-2189-4aa6-ad8c-2c055532dca5" Version="0.3.0" Language="en-US" Publisher="SandBoxOL" />
         <DisplayName>luabtsdebug</DisplayName>
         <Description xml:space="preserve">VS Debugger extension for Lua and BTS.</Description>
         <License>LICENSE.txt</License>
