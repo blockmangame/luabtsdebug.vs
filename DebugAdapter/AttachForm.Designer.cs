@@ -36,6 +36,9 @@
             this.timerRefresh = new System.Windows.Forms.Timer(this.components);
             this.buttonRefresh = new System.Windows.Forms.Button();
             this.checkBoxLocalSource = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.textBoxFilter = new System.Windows.Forms.TextBox();
+            this.buttonClear = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBoxAddr
@@ -45,9 +48,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.listBoxAddr.FormattingEnabled = true;
             this.listBoxAddr.ItemHeight = 12;
-            this.listBoxAddr.Location = new System.Drawing.Point(12, 12);
+            this.listBoxAddr.Location = new System.Drawing.Point(12, 36);
             this.listBoxAddr.Name = "listBoxAddr";
-            this.listBoxAddr.Size = new System.Drawing.Size(776, 256);
+            this.listBoxAddr.Size = new System.Drawing.Size(776, 232);
             this.listBoxAddr.TabIndex = 0;
             this.listBoxAddr.SelectedIndexChanged += new System.EventHandler(this.listBoxAddr_SelectedIndexChanged);
             this.listBoxAddr.DoubleClick += new System.EventHandler(this.buttonOk_Click);
@@ -114,6 +117,37 @@
             this.checkBoxLocalSource.Text = "使用本地代码文件";
             this.checkBoxLocalSource.UseVisualStyleBackColor = true;
             // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 9);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(41, 12);
+            this.label1.TabIndex = 13;
+            this.label1.Text = "过滤：";
+            // 
+            // textBoxFilter
+            // 
+            this.textBoxFilter.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBoxFilter.Location = new System.Drawing.Point(59, 6);
+            this.textBoxFilter.Name = "textBoxFilter";
+            this.textBoxFilter.Size = new System.Drawing.Size(648, 21);
+            this.textBoxFilter.TabIndex = 12;
+            this.textBoxFilter.TextChanged += new System.EventHandler(this.textBoxFilter_TextChanged);
+            // 
+            // buttonClear
+            // 
+            this.buttonClear.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.buttonClear.Enabled = false;
+            this.buttonClear.Location = new System.Drawing.Point(713, 4);
+            this.buttonClear.Name = "buttonClear";
+            this.buttonClear.Size = new System.Drawing.Size(75, 23);
+            this.buttonClear.TabIndex = 11;
+            this.buttonClear.Text = "清除";
+            this.buttonClear.UseVisualStyleBackColor = true;
+            this.buttonClear.Click += new System.EventHandler(this.buttonClear_Click);
+            // 
             // AttachForm
             // 
             this.AcceptButton = this.buttonOk;
@@ -121,6 +155,9 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.buttonCancel;
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.textBoxFilter);
+            this.Controls.Add(this.buttonClear);
             this.Controls.Add(this.buttonRefresh);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonOk);
@@ -145,5 +182,8 @@
         private System.Windows.Forms.Timer timerRefresh;
         private System.Windows.Forms.Button buttonRefresh;
         private System.Windows.Forms.CheckBox checkBoxLocalSource;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox textBoxFilter;
+        private System.Windows.Forms.Button buttonClear;
     }
 }

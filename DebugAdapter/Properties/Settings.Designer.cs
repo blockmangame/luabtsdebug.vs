@@ -46,5 +46,17 @@ namespace DebugAdapter.Properties {
                 this["gameDir"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string filter {
+            get {
+                return ((string)(this["filter"]));
+            }
+            set {
+                this["filter"] = value;
+            }
+        }
     }
 }
